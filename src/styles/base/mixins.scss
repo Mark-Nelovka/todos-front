@@ -1,0 +1,19 @@
+@mixin main-text($size: 18px, $weight: 400) {
+  font-size: $size;
+  font-weight: $weight;
+  font-family: "Raleway";
+}
+
+@mixin direction($display: flex, $justify: center, $align: center, $direction: row) {
+  display: $display;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
+@mixin element-to-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
