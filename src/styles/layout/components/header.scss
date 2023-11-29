@@ -1,0 +1,12 @@
+header {
+@include direction();
+
+padding: 20px 0;
+background-color: rgb(101, 232, 232);
+}
+
+.header__title {
+    @include main-text(48px, 700);
+    color: rgb(91, 168, 168);
+    text-transform: uppercase;
+}
