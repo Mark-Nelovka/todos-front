@@ -1,18 +1,22 @@
 import React from "react";
-import Button from "ui/Button/Button";
+import { createPortal } from "react-dom";
+import Form from "components/Form/Form";
+import ModalComponent from "components/ModalComponent/ModalComponent";
+import Backdrop from "components/Backdrop/Backdrop";
+import { TTodoPayload } from "redux/todos/todosOperations";
 
-interface IModalProps {
-  children: React.ReactNode;
+interface IModal {
   toggleFunc: (e: React.MouseEvent) => void;
+  todoForUpdate?: TTodoPayload;
 }
 
-export default function Modal({ children, toggleFunc }: IModalProps) {
-  return (
-    <div className="modal">
-      <Button func={toggleFunc} styles="form__close-buttom" type="button">
-        X
-      </Button>
-      {children}
-    </div>
+export default function Modal({ toggleFunc, todoForUpdate }: IModal) {
+  return createPortal(
+    <Backdrop toggleFunc={toggleFunc}>
+      <ModalComponent toggleFunc={toggleFunc}>
+        <Form todoForUpdate={todoForUpdate} />
+      </ModalComponent>
+    </Backdrop>,
+    document.body
   );
 }

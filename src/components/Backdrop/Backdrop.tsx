@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 
 interface IBackdrop {
   children: React.ReactNode;
-  isOpen: boolean;
   toggleFunc: (e: React.MouseEvent) => void;
 }
 
-export default function Backdrop({ children, isOpen, toggleFunc }: IBackdrop) {
+export default function Backdrop({ children, toggleFunc }: IBackdrop) {
   const checkKeyboardEvent = (event: any) => {
     if (event.key === "Escape") {
       toggleFunc(event);
