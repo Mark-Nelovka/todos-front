@@ -1,0 +1,22 @@
+.pagination__container {
+    @include direction;
+    width: 100%;
+}
+
+.pagination__list {
+    @include direction;
+    & li {
+        padding: 7px;
+      }
+    & li:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+      }
+      & li:not(:last-child) {
+        margin-right: 15px;
+      }
+}
+
+.active {
+    color: blue
+}

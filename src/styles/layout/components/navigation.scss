@@ -1,0 +1,51 @@
+.nav__container {
+    @include direction(flex, space-around, center, row);
+    width: 100%;
+    padding: 15px;
+}
+
+.nav__list {
+    @include direction(flex, space-around, center, row);
+    & li:not(:last-child) {
+        margin-right: 15px;
+    }
+}
+
+.nav__list-item {
+    &:not(:last-child) {
+        margin-right: 15px;
+    }
+    & a {
+        display: inline-block;
+        padding: 10px;
+        cursor: pointer;
+        color: black;
+    }
+    & a.active {
+        color: blue;
+        transform: scale(1.1);
+    }
+    &:hover {
+         transform: scale(1.1);
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .nav__container {
+        @include direction(flex, flex-end, center, row);
+        & button:not(:last-child) {
+            margin-right: 15px;
+           }
+    }
+
+}
+
+@media screen and (min-width: 1280px) {
+    .nav__container {
+        @include direction(flex, center, center, row);
+        & button:not(:last-child) {
+            margin-right: 30px;
+           }
+    }
+
+}

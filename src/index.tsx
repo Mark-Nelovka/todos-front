@@ -4,8 +4,7 @@ import "normalize.css";
 import "./styles/main.scss";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { PersistGate } from "redux-persist/integration/react";
-import store, { persistor } from "redux/store";
+import store from "redux/store";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 
@@ -15,11 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PersistGate>
+      <BrowserRouter basename="todos-front">
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

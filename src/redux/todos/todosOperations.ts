@@ -5,21 +5,46 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // axios.defaults.baseURL = `${REACT_APP_URL_API}`;
 
-type Payload = {
-  order?: string;
-  offset?: number;
-  limit: number;
-  field?: string;
-  firstIndex?: number;
-  lastIndex?: number;
+export type TTodoPayload = {
+  id?: number;
+  title: string;
+  description: string;
+  deadline: Date;
+  completed: boolean;
+  isPassed?: boolean
 };
 
-const getStudents = createAsyncThunk(
-  'students/fetchStudents',
-  async (_, thunkApi) => {
+type TParametrs = {
+  page: number;
+}
+
+const getAllTodos = createAsyncThunk(
+  'todos/fetchTodos',
+  async ({page}:TParametrs, thunkApi) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/students?&limit=10`,
+        `http://localhost:8080/todos?page=${page}`,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          },
+        },
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error)
+      return thunkApi.rejectWithValue(error);
+    }
+  },
+);
+
+const getAllCompletedTodos = createAsyncThunk(
+  'todos/fetchCompletedTodos',
+  async ({page}:TParametrs, thunkApi) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:8080/todos/completed?page=${page}`,
         {
           headers: {
             'Access-Control-Allow-Origin': 'http://localhost:8080',
@@ -28,61 +53,95 @@ const getStudents = createAsyncThunk(
       );
       return data;
     } catch (error) {
+      console.log(error)
       return thunkApi.rejectWithValue(error);
     }
   },
 );
 
-// const sortStudents = createAsyncThunk("students/sort", async ({order, offset, limit, field}: Payload, thunkApi) => {
-//     try {
-//         const { data } = await axios.get(`http://localhost:8080/students/sort?field=${field}&order=${order}&offset=${offset}&limit=${limit}`, {
-//             headers: {
-//                 "Access-Control-Allow-Origin": "http://localhost:8080",
-//             }
-//             });
-//         return data;
-//    } catch (error) {
-//     return error;
-//     //   thunkApi.rejectWithValue("Oooops, something is wrong");
-//    }
-// })
+const getAllPassededTodos = createAsyncThunk(
+  'todos/fetchPassedTodos',
+  async ({page}:TParametrs, thunkApi) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:8080/todos/passed?page=${page}`,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          },
+        },
+      );
+      return data;
+    } catch (error) {
+      console.log(error)
+      return thunkApi.rejectWithValue(error);
+    }
+  },
+);
 
-// const findStudentByFilterField = createAsyncThunk("students/findStudent", async (payload: string, thunkApi) => {
-//     try {
-//         const { data } = await axios.get(`http://localhost:8080/students/search/${payload}`,  {
-//             headers: {
-//                 "Access-Control-Allow-Origin": "http://localhost:8080",
-//             },
-//         });
-//         if (data.status === 200 && data.data.length > 0) {
-//             console.log(data);
-//             return data;
-//         } else {
-//             throw data;
-//         }
-//     } catch (error) {
-//         return thunkApi.rejectWithValue(error);
-//    }
-// })
+const createTodo = createAsyncThunk(
+  'todos/createTodo',
+  async (payload: TTodoPayload, thunkApi) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:8080/todos`,
+        payload,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          },
+        },
+      );
+      console.log(data)
+      return data;
+    } catch (error) {
+      console.log(error)
+      return thunkApi.rejectWithValue(error);
+    }
+  },
+);
 
-// const pagination = createAsyncThunk("students/pagination", async ({limit, firstIndex, lastIndex, order}: Payload, thunkApi) => {
-//     try {
-//         const { data } = await axios.get(`http://localhost:8080/students/pagination?order=${order}&limit=${limit}&firstIndex=${firstIndex}&lastIndex=${lastIndex}`,  {
-//             headers: {
-//                 "Access-Control-Allow-Origin": "http://localhost:8080",
-//             },
-//         });
-//         console.log(data)
-//         if (data.status === 200 && data.data.length > 0) {
-//             console.log(data);
-//             return data;
-//         } else {
-//             throw data;
-//         }
-//     } catch (error) {
-//         console.log("ERROR: ", error);
-//         return thunkApi.rejectWithValue(error);
-//    }
-// })
+const removeTodo = createAsyncThunk(
+  'todos/removeTodo',
+  async (payload: number, thunkApi) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:8080/todos/${payload}`,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          },
+        },
+      );
+      console.log(data)
+      return data;
+    } catch (error) {
+      console.log(error)
+      return thunkApi.rejectWithValue(error);
+    }
+  },
+);
 
-export { getStudents };
+const updateTodo = createAsyncThunk(
+  'todos/updateTodo',
+  async (payload: TTodoPayload, thunkApi) => {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:8080/todos/${payload.id}`,
+        payload,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          },
+        },
+      );
+      console.log(data)
+      return data;
+    } catch (error) {
+      console.log(error)
+      return thunkApi.rejectWithValue(error);
+    }
+  },
+);
+
+export { getAllTodos, createTodo, removeTodo, updateTodo, getAllCompletedTodos, getAllPassededTodos };
