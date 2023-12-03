@@ -11,10 +11,10 @@ import Button from "ui/Button/Button";
 import Modal from "components/Modal/Modal";
 import PlusIcon from "assets/plus-icon.svg";
 
-export default function PassedPage():JSX.Element {
+export default function PassedPage(): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const todos = useAppSelector((state) => state.todos.data.data.todos);
-  const requestError = useAppSelector(state => state.todos.error);
+  const requestError = useAppSelector((state) => state.todos.error);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -22,10 +22,10 @@ export default function PassedPage():JSX.Element {
   }, []);
 
   useEffect(() => {
-    if(requestError.statusCode) {
-        Notiflix.Notify.warning(requestError.message);
-      } 
-  }, [requestError])  
+    if (requestError.statusCode) {
+      Notiflix.Notify.warning(requestError.message);
+    }
+  }, [requestError]);
 
   const changePage = (page: number) => {
     dispatch(getAllTodos({ page: page, currentPage: "passed" }));
@@ -40,22 +40,26 @@ export default function PassedPage():JSX.Element {
 
   return (
     <>
-    <Header />
-    <Navigation />
-    <div className="container">
-    {requestError.statusCode && todos.length === 0 && <ErrorPage />}
-    {todos.length > 0 && <TodoList todos={todos} /> }
-    {todos.length > 0 && <Pagination changePageFunc={changePage} />}
-    </div>
-    <Button
+      <Header />
+      <Navigation />
+      <div className="container">
+        {requestError.statusCode && todos.length === 0 && <ErrorPage />}
+        {todos.length > 0 && <TodoList todos={todos} />}
+        {todos.length > 0 && <Pagination changePageFunc={changePage} />}
+      </div>
+      <Button
         id="open-modal"
         type="button"
         dataValue="true"
         func={toggleModal}
         styles="button-toggle-form"
       >
-        <img data-backdrop="true" src={PlusIcon} alt="Button for open create todo form" />
-      </Button> 
+        <img
+          data-backdrop="true"
+          src={PlusIcon}
+          alt="Button for open create todo form"
+        />
+      </Button>
       {isModalOpen && <Modal toggleFunc={toggleModal} />}
     </>
   );

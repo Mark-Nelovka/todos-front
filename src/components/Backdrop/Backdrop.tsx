@@ -5,7 +5,10 @@ interface IBackdrop {
   toggleFunc: (e: React.MouseEvent) => void;
 }
 
-export default function Backdrop({ children, toggleFunc }: IBackdrop):JSX.Element {
+export default function Backdrop({
+  children,
+  toggleFunc,
+}: IBackdrop): JSX.Element {
   const checkKeyboardEvent = (event: any) => {
     if (event.key === "Escape") {
       toggleFunc(event);

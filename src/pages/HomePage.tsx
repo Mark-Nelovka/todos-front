@@ -11,25 +11,24 @@ import Button from "ui/Button/Button";
 import Modal from "components/Modal/Modal";
 import PlusIcon from "assets/plus-icon.svg";
 
-
-export default function HomePage():JSX.Element  {
+export default function HomePage(): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const todos = useAppSelector((state) => state.todos.data.data.todos);
-  const requestError = useAppSelector(state => state.todos.error);
+  const requestError = useAppSelector((state) => state.todos.error);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllTodos({ page: 1, currentPage: 'home' }));
+    dispatch(getAllTodos({ page: 1, currentPage: "home" }));
   }, []);
 
   useEffect(() => {
-    if(requestError.statusCode) {
-            Notiflix.Notify.warning(requestError.message);
-          } 
-  }, [requestError])  
+    if (requestError.statusCode) {
+      Notiflix.Notify.warning(requestError.message);
+    }
+  }, [requestError]);
 
   const changePage = (page: number) => {
-    dispatch(getAllTodos({ page: page, currentPage: 'home' }));
+    dispatch(getAllTodos({ page: page, currentPage: "home" }));
   };
 
   const toggleModal = (e: React.MouseEvent): void => {
@@ -41,22 +40,26 @@ export default function HomePage():JSX.Element  {
 
   return (
     <>
-    <Header />
-    <Navigation />
-    <div className="container">
-    {requestError.statusCode && todos.length === 0 && <ErrorPage />}
-    {todos.length > 0 && <TodoList todos={todos} /> }
-    {todos.length > 0 && <Pagination changePageFunc={changePage} />}
-    </div>
-    <Button
+      <Header />
+      <Navigation />
+      <div className="container">
+        {requestError.statusCode && todos.length === 0 && <ErrorPage />}
+        {todos.length > 0 && <TodoList todos={todos} />}
+        {todos.length > 0 && <Pagination changePageFunc={changePage} />}
+      </div>
+      <Button
         id="open-modal"
         type="button"
         dataValue="true"
         func={toggleModal}
         styles="button-toggle-form"
       >
-        <img data-backdrop="true" src={PlusIcon} alt="Button for open create todo form" />
-      </Button> 
+        <img
+          data-backdrop="true"
+          src={PlusIcon}
+          alt="Button for open create todo form"
+        />
+      </Button>
       {isModalOpen && <Modal toggleFunc={toggleModal} />}
     </>
   );

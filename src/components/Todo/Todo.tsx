@@ -1,10 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "redux/hook";
-import {
-  removeTodo,
-  updateTodo,
-} from "redux/todos/todosOperations";
+import { removeTodo, updateTodo } from "redux/todos/todosOperations";
 import Button from "ui/Button/Button";
 import removeIcon from "assets/remove-icon.svg";
 import { TTodoPayload } from "redux/todos/types";
@@ -14,7 +11,7 @@ interface ITodo {
   todo: TTodoPayload;
 }
 
-export default function Todo({ todo, toggleFunc }: ITodo):JSX.Element {
+export default function Todo({ todo, toggleFunc }: ITodo): JSX.Element {
   const dispatch = useAppDispatch();
   const location = useLocation();
 

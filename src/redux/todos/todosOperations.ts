@@ -2,16 +2,14 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ICreateTodoPayload, IRemovePayload, IUpdatePayload, TParametrsGetAll } from './types';
 
-// const { REACT_APP_URL_API } = process.env;
-
-// axios.defaults.baseURL = `${REACT_APP_URL_API}`;
+axios.defaults.baseURL = 'http://localhost:8080/api/todos/';
 
 const getAllTodos = createAsyncThunk(
   'todos/fetchTodos',
   async ({page, currentPage}: TParametrsGetAll, thunkApi) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/todos/${currentPage}?page=${page}`,
+        `${currentPage}?page=${page}`,
         {
           headers: {
             'Access-Control-Allow-Origin': 'http://localhost:8080',
@@ -33,7 +31,7 @@ const createTodo = createAsyncThunk(
   }: ICreateTodoPayload, thunkApi) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:8080/todos${current}`,
+        `${current}`,
         newTodo,
         {
           headers: {
@@ -56,7 +54,7 @@ const removeTodo = createAsyncThunk(
   }: IRemovePayload, thunkApi) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:8080/todos${current}/${id}`,
+        `${current}/${id}`,
         {
           headers: {
             'Access-Control-Allow-Origin': 'http://localhost:8080',
@@ -78,7 +76,7 @@ const updateTodo = createAsyncThunk(
   }: IUpdatePayload, thunkApi) => {
     try {
       const { data } = await axios.patch(
-        `http://localhost:8080/todos${current}/${newTodo.id}`,
+        `${current}/${newTodo.id}`,
         newTodo,
         {
           headers: {

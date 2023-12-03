@@ -12,7 +12,7 @@ export default function TodoList({
 }): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoForUpdateForm, setTodoForUpdateForm] = useState<TTodoPayload>();
-  const isLoading = useAppSelector(state => state.todos.isLoading);
+  const isLoading = useAppSelector((state) => state.todos.isLoading);
 
   const toggleModal = (e: React.MouseEvent): void => {
     const { dataset, id } = e.target as HTMLDivElement;
@@ -32,9 +32,13 @@ export default function TodoList({
     <>
       <div className="todo__container">
         {isLoading && <Loader />}
-        {!isLoading && <ul className="todo__list">
-          {todos.map((todo) => <Todo todo={todo} toggleFunc={toggleModal} />)}
-        </ul>}
+        {!isLoading && (
+          <ul className="todo__list">
+            {todos.map((todo) => (
+              <Todo todo={todo} toggleFunc={toggleModal} />
+            ))}
+          </ul>
+        )}
         {isModalOpen && (
           <Modal todoForUpdate={todoForUpdateForm} toggleFunc={toggleModal} />
         )}
