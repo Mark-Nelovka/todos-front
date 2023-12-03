@@ -13,9 +13,9 @@ function App():JSX.Element {
       <main>
           <Suspense fallback={<Loader />}>
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/completed" element={<CompletedPage />} />
-              <Route path="/passed" element={<PassedPage />} />
+              <Route path="/todos-front" element={<HomePage />} />
+              <Route path="/todos-front/completed" element={<CompletedPage />} />
+              <Route path="/todos-front/passed" element={<PassedPage />} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
           </Suspense>

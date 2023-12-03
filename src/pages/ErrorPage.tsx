@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function ErrorPage() {
   return <div className="error__page">
      <p className="error">
-        <NavLink to='/'>
+        <NavLink to='/todos-front'>
           Back to home page
         </NavLink>
       </p>

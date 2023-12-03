@@ -5,13 +5,13 @@ export default function Navigation(): JSX.Element {
     <nav className="nav__container">
       <ul className="nav__list">
         <li className="nav__list-item">
-          <NavLink to="/">All</NavLink>
+          <NavLink to="/todos-front">All</NavLink>
         </li>
         <li className="nav__list-item">
-          <NavLink to="/completed">Done</NavLink>
+          <NavLink to="/todos-front/completed">Done</NavLink>
         </li>
         <li className="nav__list-item">
-          <NavLink to="/passed">Passed</NavLink>
+          <NavLink to="/todos-front/passed">Passed</NavLink>
         </li>
       </ul>
     </nav>
