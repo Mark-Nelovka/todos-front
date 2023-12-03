@@ -1,0 +1,81 @@
+.form {
+    position: relative;
+    @include direction(flex, center, flex-start, column);
+    width: 100%;
+    margin-bottom: 20px;
+    & label {
+        @include main-text(16px, 500);
+        margin-bottom: 7px;
+        letter-spacing: 1.1px;
+    }
+}
+
+.form__title {
+    @include main-text(36px, 600);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form__title-field {
+    @include main-text(18px, 400);
+    padding: 4px 8px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.form__description-field {
+    @include main-text(18px, 400);
+    padding: 8px 8px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    width: 100%;
+    min-height: 150px;
+    border: 1px solid black;
+}
+
+.form__calendar-container {
+  @include direction(flex, center, center, initial);
+  position: relative;
+  width: 180px;
+  cursor: pointer;
+  background-color: inherit;
+  border-bottom: 1px solid $black;
+}
+
+.form__calendar-icon {
+    display: inline-block;
+    background-color: inherit;
+    border-bottom: 1px solid $black;
+    width: 15px;
+    height: 15px;
+}
+
+.form__button-container {
+    text-align: center;
+    & button {
+        @include main-text(20px, 500);
+        background-color: $completed;
+        padding: 5px 15px;
+        border-radius: 10px;
+        width: 100%;
+    }
+}
+
+.form__completed-button {
+    width: 50%;
+    width: 170px;
+    padding: 10px 20px 10px 20px;
+    background-color: $completed;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+
+.form__completed-button--cancel {
+    background-color: $red;
+}
+
+.form__complited-button--complete {
+    background-color: $yellow;
+}

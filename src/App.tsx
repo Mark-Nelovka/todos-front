@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Suspense, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Loader } from "ui/Loader/Loader";
+import HomePage from "pages/HomePage";
 
-function App() {
+const CompletedPage = lazy(() => import ('pages/CompletedPage' /* webpackChunkName: "Todo completed page" */));
+const PassedPage = lazy(() => import ('pages/PassedPage' /* webpackChunkName: "Todo passed page" */));
+const ErrorPage = lazy(() => import ('pages/ErrorPage' /* webpackChunkName: "Error page" */));
+
+function App():JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <main>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/completed" element={<CompletedPage />} />
+              <Route path="/passed" element={<PassedPage />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </Suspense>
+      </main>
+    </>
   );
 }
 
