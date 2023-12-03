@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/todos-front/static/css/main.d5a18e2b.css",
-    "main.js": "/todos-front/static/js/main.d2958e15.js",
+    "main.js": "/todos-front/static/js/main.b71c1d31.js",
     "Todo completed page.js": "/todos-front/static/js/Todo completed page.60c40146.chunk.js",
     "Todo passed page.js": "/todos-front/static/js/Todo passed page.34a0ab7d.chunk.js",
     "static/js/787.2ab485b0.chunk.js": "/todos-front/static/js/787.2ab485b0.chunk.js",
@@ -13,13 +13,13 @@
     "static/media/close-icon.svg": "/todos-front/static/media/close-icon.45cd16c9f568458a57684ac9bff3f05e.svg",
     "static/media/arrow-left-icon.svg": "/todos-front/static/media/arrow-left-icon.e835cace2fbd2826f6972fe51c91ecab.svg",
     "main.d5a18e2b.css.map": "/todos-front/static/css/main.d5a18e2b.css.map",
-    "main.d2958e15.js.map": "/todos-front/static/js/main.d2958e15.js.map",
+    "main.b71c1d31.js.map": "/todos-front/static/js/main.b71c1d31.js.map",
     "Todo completed page.60c40146.chunk.js.map": "/todos-front/static/js/Todo completed page.60c40146.chunk.js.map",
     "Todo passed page.34a0ab7d.chunk.js.map": "/todos-front/static/js/Todo passed page.34a0ab7d.chunk.js.map",
     "787.2ab485b0.chunk.js.map": "/todos-front/static/js/787.2ab485b0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d5a18e2b.css",
-    "static/js/main.d2958e15.js"
+    "static/js/main.b71c1d31.js"
   ]
 }
