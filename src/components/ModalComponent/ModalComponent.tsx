@@ -7,16 +7,17 @@ interface IModalProps {
   toggleFunc: (e: React.MouseEvent) => void;
 }
 
-export default function ModalComponent({ children, toggleFunc }: IModalProps) {
+export default function ModalComponent({ children, toggleFunc }: IModalProps):JSX.Element {
   return (
     <div className="modal">
       <Button
         id="modal-close-button"
         func={toggleFunc}
-        styles="form__close-buttom"
+        styles="modal__close-button"
         type="button"
+        dataValue="true"
       >
-        <img src={closeIcon} alt="Icon for close modal" />
+        <img data-backdrop="true" src={closeIcon} alt="Icon for close modal" />
       </Button>
       {children}
     </div>
