@@ -3,17 +3,15 @@
 @import "./base/mixins.scss";
 @import "./base/base.scss";
 
-@import "./layout/ui/Button/buttonToggleForm.scss";
-@import "./layout/ui/FieldsForm/fields.scss";
+@import "./layout/ui/Button/button-toggle-form.scss";
+@import "./layout/ui/Loader/loader.scss";
 
-@import "./layout/components/backdrop.scss";
 @import "./layout/components/header.scss";
 @import "./layout/components/todo-list.scss";
 @import "./layout/components/modal.scss";
 @import "./layout/components/navigation.scss";
 @import "./layout/components/form.scss";
 @import "./layout/components/pagination.scss";
-@import "./layout/components/footer.scss";
 
 
 

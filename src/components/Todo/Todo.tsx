@@ -1,45 +1,45 @@
-import Modal from "components/Modal/Modal";
-import React, { useState } from "react";
+import React from "react";
+import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "redux/hook";
-import { TTodoPayload, removeTodo, updateTodo } from "redux/todos/todosOperations";
-import { TTodo } from "redux/todos/todosSlice";
+import {
+  removeTodo,
+  updateTodo,
+} from "redux/todos/todosOperations";
 import Button from "ui/Button/Button";
 import removeIcon from "assets/remove-icon.svg";
-
-function checkDeadline(deadlineDate: string): string {
-  const date = new Date(deadlineDate).getTime();
-  const today = new Date().getTime();
-  if (date > today) {
-    return "todo__list-item--accept";
-  } else {
-    return "todo__list-item--pass";
-  }
-}
+import { TTodoPayload } from "redux/todos/types";
 
 interface ITodo {
   toggleFunc: (e: React.MouseEvent) => void;
   todo: TTodoPayload;
 }
 
-export default function Todo({ todo, toggleFunc }: ITodo) {
+export default function Todo({ todo, toggleFunc }: ITodo):JSX.Element {
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
-  const handleremoveTodo = (id?: number) => {
-    dispatch(removeTodo(id!));
+  const handleremoveTodo = () => {
+    dispatch(
+      removeTodo({
+        current: location.pathname === "/" ? "/home" : location.pathname,
+        id: todo.id!,
+      })
+    );
   };
 
   const handleUpdateTodo = () => {
-    dispatch(updateTodo({...todo, completed: true}))
+    dispatch(
+      updateTodo({
+        newTodo: { ...todo, completed: true },
+        current: location.pathname === "/" ? "/home" : location.pathname,
+      })
+    );
   };
 
   return (
     <>
-    {/* <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut illum consequuntur adipisci voluptatem dolor dignissimos aliquam optio, dolore hic? Nobis autem recusandae nihil doloremque at voluptatem tempora sint accusamus animi..</p> */}
       {
-        <li
-          className={`todo__list-item ${checkDeadline(String(todo.deadline))}`}
-          key={todo.id}
-        >
+        <li className={`todo__list-item`} key={todo.id}>
           <p className="todo__list-item_title todo__list-item_decoration">
             {todo.title}
           </p>
@@ -63,13 +63,14 @@ export default function Todo({ todo, toggleFunc }: ITodo) {
               id="done"
               func={handleUpdateTodo}
               type="button"
+              disabled={todo.completed}
             >
               Done
             </Button>
             <Button
               styles="todo__list-item_button_delete"
               id="delete"
-              func={() => handleremoveTodo(todo.id)}
+              func={handleremoveTodo}
               type="button"
             >
               <img src={removeIcon} alt="remove todo item icon" />

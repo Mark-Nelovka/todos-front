@@ -19,7 +19,7 @@ export function Input({
   name,
   labelTitle,
 }: IInput): JSX.Element {
-  console.log(value);
+  // console.log(value);
   return (
     <>
       <label htmlFor={name}>{labelTitle}</label>

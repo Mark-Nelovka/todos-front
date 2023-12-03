@@ -5,6 +5,6 @@ interface ITitle {
   style: string;
 }
 
-export default function Title({ children, style }: ITitle) {
+export default function Title({ children, style }: ITitle):JSX.Element {
   return <h1 className={style}>{children}</h1>;
 }

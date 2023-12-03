@@ -4,11 +4,12 @@
   font-family: "Raleway";
 }
 
-@mixin direction($display: flex, $justify: center, $align: center, $direction: row) {
+@mixin direction($display: flex, $justify: center, $align: center, $direction: row, $wrap: nowrap) {
   display: $display;
   justify-content: $justify;
   align-items: $align;
   flex-direction: $direction;
+  flex-wrap: $wrap;
 }
 
 @mixin element-to-center {
@@ -18,7 +19,7 @@
   transform: translate(-50%, -50%);
 }
 
-@mixin position($position: relative, $top: initial, $right: initial, $bottom: initial, $left: initial) {
+@mixin position($position: initial, $top: initial, $right: initial, $bottom: initial, $left: initial) {
   position: $position;
   top: $top;
   right: $right;

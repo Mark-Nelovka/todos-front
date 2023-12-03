@@ -1,22 +1,23 @@
-import Title from "components/Title/Title";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "redux/hook";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useLocation } from "react-router-dom";
 import {
-  TTodoPayload,
   createTodo,
   updateTodo,
 } from "redux/todos/todosOperations";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Title from "components/Title/Title";
 import Button from "ui/Button/Button";
 import { Input, TextArea } from "ui/FormFields/Fields";
 import CalendarIcon from "assets/calendar-icon.svg";
+import { TTodoPayload } from "redux/todos/types";
 
 interface IFormProps {
   todoForUpdate?: TTodoPayload;
 }
 
-export default function Form({ todoForUpdate }: IFormProps) {
+export default function Form({ todoForUpdate }: IFormProps):JSX.Element {
   const [inputValue, setInputValue] = useState<TTodoPayload>({
     title: "",
     description: "",
@@ -24,6 +25,7 @@ export default function Form({ todoForUpdate }: IFormProps) {
     completed: false,
   });
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (todoForUpdate) {
@@ -33,11 +35,21 @@ export default function Form({ todoForUpdate }: IFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if(todoForUpdate) {
-      dispatch(updateTodo(inputValue))
+    if (todoForUpdate) {
+      dispatch(
+        updateTodo({
+          newTodo: inputValue,
+          current: location.pathname === "/" ? "/home" : location.pathname,
+        })
+      );
       return;
     }
-    dispatch(createTodo(inputValue))
+    dispatch(
+      createTodo({
+        newTodo: inputValue,
+        current: location.pathname === "/" ? "/home" : location.pathname,
+      })
+    );
   };
 
   const handleChangeInputValue = (event: React.ChangeEvent) => {
@@ -50,6 +62,13 @@ export default function Form({ todoForUpdate }: IFormProps) {
 
   const handleDateChange = (deadline: Date) => {
     setInputValue({ ...inputValue, deadline });
+  };
+
+  const handleChangeInputValueCompleted = () => {
+    setInputValue((prevState) => ({
+      ...prevState,
+      completed: !prevState.completed,
+    }));
   };
 
   return (
@@ -81,20 +100,30 @@ export default function Form({ todoForUpdate }: IFormProps) {
             key="input"
             dateFormat="dd.MM.yyyy"
             selected={inputValue.deadline}
-            // minDate={new Date()}
-            className="qwe"
             onChange={handleDateChange}
           />
           <DatePicker
             key="icon"
             dateFormat="dd.MM.yyyy"
             selected={inputValue.deadline}
-            // minDate={new Date()}
             onChange={handleDateChange}
             className="form__calendar-icon"
             customInput={<img src={CalendarIcon} alt="Calendar Icon" />}
           />
         </div>
+        <Button
+          dataValue={"false"}
+          id="form-button-complete"
+          type="button"
+          func={handleChangeInputValueCompleted}
+          styles={`form__completed-button ${
+            inputValue.completed
+              ? "form__completed-button--cancel"
+              : "form__complited-button--complete"
+          }`}
+        >
+          {inputValue.completed ? "Cancel completed?" : "Already completed?"}
+        </Button>
       </form>
       <div className="form__button-container">
         <Button

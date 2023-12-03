@@ -1,7 +1,6 @@
 import Title from "components/Title/Title";
-import React from "react";
 
-export default function Header() {
+export default function Header():JSX.Element {
   return (
     <header>
       <Title style="header__title">Welcome</Title>

@@ -1,11 +1,19 @@
 .modal {
-    position: absolute;
     z-index: 10;
     @include element-to-center;
-    background-color: #fff;
+    background-color: $white;
     padding: 30px;
-    border: 1px solid grey;
+    border: 1px solid $grayDark;
     border-radius: 7px;
     width: 90%;
     max-width: 600px;
+}
+
+.modal__close-button {
+    @include direction();
+    @include position(absolute, 10px, 10px, initial, initial);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $red;
 }
