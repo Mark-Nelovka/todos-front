@@ -4,11 +4,14 @@ import React, { useState } from "react";
 import { Loader } from "ui/Loader/Loader";
 import { useAppSelector } from "redux/hook";
 import { TTodoPayload } from "redux/todos/types";
+import EmptyPage from "pages/EmptyPage";
 
 export default function TodoList({
   todos,
+  isEmptyText,
 }: {
   todos: TTodoPayload[];
+  isEmptyText: string,
 }): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoForUpdateForm, setTodoForUpdateForm] = useState<TTodoPayload>();
@@ -39,6 +42,7 @@ export default function TodoList({
             ))}
           </ul>
         )}
+        {!isLoading && todos.length === 0 && <EmptyPage message={isEmptyText} />}
         {isModalOpen && (
           <Modal todoForUpdate={todoForUpdateForm} toggleFunc={toggleModal} />
         )}

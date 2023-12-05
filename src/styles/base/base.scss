@@ -25,6 +25,12 @@ body {
   width: 50%;
 }
 
+.empty__page {
+  @include element-to-center;
+  @include main-text(48px, 700);
+  text-align: center;
+}
+
 @media screen and (min-width: 320px) {
   .container {
       min-width: 320px;

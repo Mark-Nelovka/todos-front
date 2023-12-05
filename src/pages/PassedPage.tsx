@@ -44,7 +44,7 @@ export default function PassedPage(): JSX.Element {
       <Navigation />
       <div className="container">
         {requestError.statusCode && todos.length === 0 && <ErrorPage />}
-        {todos.length > 0 && <TodoList todos={todos} />}
+        <TodoList todos={todos} isEmptyText="You haven't skipped any tasks" />
         {todos.length > 0 && <Pagination changePageFunc={changePage} />}
       </div>
       <Button

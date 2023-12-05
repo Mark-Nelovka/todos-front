@@ -44,7 +44,7 @@ export default function HomePage(): JSX.Element {
       <Navigation />
       <div className="container">
         {requestError.statusCode && todos.length === 0 && <ErrorPage />}
-        {todos.length > 0 && <TodoList todos={todos} />}
+        <TodoList todos={todos} isEmptyText="You haven't any tasks yet" />
         {todos.length > 0 && <Pagination changePageFunc={changePage} />}
       </div>
       <Button
