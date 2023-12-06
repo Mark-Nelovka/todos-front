@@ -7,7 +7,7 @@ import {
   TParametrsGetAll,
 } from "./types";
 
-axios.defaults.baseURL = "http://localhost:8080/api/todos";
+axios.defaults.baseURL = "https://todos-nest.vercel.app/api/todos";
 
 const getAllTodos = createAsyncThunk(
   "todos/fetchAllTodos",
@@ -17,7 +17,7 @@ const getAllTodos = createAsyncThunk(
         `?page=${page}&offset=${offset}&limit=${limit}`,
         {
           headers: {
-            "Access-Control-Allow-Origin": "http://localhost:8080",
+            "Access-Control-Allow-Origin": "*",
           },
         }
       );

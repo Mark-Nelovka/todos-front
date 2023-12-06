@@ -87,7 +87,7 @@ export default function TodoList({
               .sort((a, b) => b.id - a.id)
               .slice(firstIndex, lastIndex)
               .map((todo) => (
-                <Todo todo={todo} toggleFunc={toggleModal} />
+                <Todo key={todo.id} todo={todo} toggleFunc={toggleModal} />
               ))}
           </ul>
         )}

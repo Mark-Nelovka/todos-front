@@ -120,7 +120,7 @@ export default function Pagination({
         </div>
         <ul onClick={changePage} className="pagination__list">
           {allPageNumber.slice(firstIndex, lastIndex).map((el) => (
-            <li id={`${el}`} className={activePage === el ? "active" : ""}>
+            <li key={el} id={`${el}`} className={activePage === el ? "active" : ""}>
               {el}
             </li>
           ))}

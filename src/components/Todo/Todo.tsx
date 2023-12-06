@@ -41,7 +41,7 @@ export default function Todo({ todo, toggleFunc }: ITodo): JSX.Element {
   return (
     <>
       {
-        <li className={`todo__list-item`} key={todo.id}>
+        <li className={`todo__list-item`}>
           <p className="todo__list-item_title todo__list-item_decoration">
             {todo.title ? todo.title : "Title"}
           </p>
