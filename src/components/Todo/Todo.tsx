@@ -1,6 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { useAppDispatch } from "redux/hook";
+import { useAppDispatch, useAppSelector } from "redux/hook";
 import { removeTodo, updateTodo } from "redux/todos/todosOperations";
 import Button from "ui/Button/Button";
 import removeIcon from "assets/remove-icon.svg";
@@ -12,23 +11,29 @@ interface ITodo {
 }
 
 export default function Todo({ todo, toggleFunc }: ITodo): JSX.Element {
+  const page = useAppSelector((state) => state.todos.data.data.pagination.page);
   const dispatch = useAppDispatch();
-  const location = useLocation();
 
   const handleremoveTodo = () => {
+    const limit = page * 10;
     dispatch(
       removeTodo({
-        current: location.pathname === "/" ? "/home" : location.pathname,
         id: todo.id!,
+        offset: 0,
+        limit,
+        page,
       })
     );
   };
 
-  const handleUpdateTodo = () => {
+  const handleUpdateCompleteTodo = () => {
+    const limit = page * 10;
     dispatch(
       updateTodo({
         newTodo: { ...todo, completed: true },
-        current: location.pathname === "/" ? "/home" : location.pathname,
+        offset: 0,
+        limit,
+        page,
       })
     );
   };
@@ -38,10 +43,10 @@ export default function Todo({ todo, toggleFunc }: ITodo): JSX.Element {
       {
         <li className={`todo__list-item`} key={todo.id}>
           <p className="todo__list-item_title todo__list-item_decoration">
-            {todo.title}
+            {todo.title ? todo.title : "Title"}
           </p>
           <p className="todo__list-item_decoration todo__list-item_description">
-            {todo.description}
+            {todo.description ? todo.description : "Description"}
           </p>
           <p className={`todo__list-item_decoration todo__list-item_deadline`}>
             <span>Deadline:</span> {String(todo.deadline)}
@@ -58,7 +63,7 @@ export default function Todo({ todo, toggleFunc }: ITodo): JSX.Element {
             <Button
               styles="todo__list-item_button_done"
               id="done"
-              func={handleUpdateTodo}
+              func={handleUpdateCompleteTodo}
               type="button"
               disabled={todo.completed}
             >

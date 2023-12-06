@@ -1,33 +1,40 @@
 // ----- TODO OPERATIONS ----- //
 
 export type TTodoPayload = {
-    id?: number;
-    title: string;
-    description: string;
-    deadline: Date;
-    completed: boolean;
-    isPassed?: boolean
-  };
-  
+  id?: number;
+  title: string;
+  description: string;
+  deadline: Date;
+  completed: boolean;
+  isPassed?: boolean;
+};
+
 export type TParametrsGetAll = {
-    page: number;
-    currentPage?: string;
-  }
-  
+  offset: number;
+  limit: number;
+  page: number;
+};
+
 export interface ICreateTodoPayload {
-    newTodo: TTodoPayload;
-    current: string
-  }
-  
+  newTodo: TTodoPayload;
+  offset: number;
+  limit: number;
+  page: number;
+}
+
 export interface IRemovePayload {
-    id: number;
-    current: string
-  }
-  
+  id: number;
+  offset: number;
+  limit: number;
+  page: number;
+}
+
 export interface IUpdatePayload {
-    newTodo: TTodoPayload;
-    current: string
-  }
+  newTodo: TTodoPayload;
+  offset: number;
+  limit: number;
+  page: number;
+}
 
 // ----- TODO SLICE ----- //
 
@@ -37,7 +44,6 @@ export type TTodo = {
   description: string;
   deadline: Date;
   completed: boolean;
-  passed: boolean;
   createdAt: string;
   updateAt: string;
 };
@@ -45,13 +51,23 @@ export type TTodo = {
 export interface ITodosState {
   isLoading: boolean;
   data: {
-    statusCode: number | null,
+    statusCode: number | null;
     message: string;
     data: {
-      todos: TTodo[],
-      countTodos: number;
-      page: number,
-    }
+      todos: {
+        all: TTodo[];
+        completed: TTodo[];
+        passed: TTodo[];
+      };
+      pagination: {
+        page: number;
+        maxPage: {
+          all: number;
+          completed: number;
+          passed: number;
+        };
+      };
+    };
   };
   error: {
     statusCode: number | null;
@@ -60,11 +76,21 @@ export interface ITodosState {
 }
 
 export interface IPayloadActionSuccess {
-    statusCode: number,
-    message: string;
-    data: {
-      todos: TTodo[],
-      countTodos: number;
+  statusCode: number;
+  message: string;
+  data: {
+    todos: {
+      all: TTodo[];
+      completed: TTodo[];
+      passed: TTodo[];
+    };
+    pagination: {
       page: number;
-    }
+      maxPage: {
+        all: number;
+        completed: number;
+        passed: number;
+      };
+    };
+  };
 }

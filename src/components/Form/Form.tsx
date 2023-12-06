@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch } from "redux/hook";
+import { useAppDispatch, useAppSelector } from "redux/hook";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useLocation } from "react-router-dom";
 import { createTodo, updateTodo } from "redux/todos/todosOperations";
 import Title from "components/Title/Title";
 import Button from "ui/Button/Button";
@@ -11,7 +10,14 @@ import { TTodoPayload } from "redux/todos/types";
 import CalendarIcon from "assets/calendar-icon.svg";
 
 interface IFormProps {
-  todoForUpdate?: TTodoPayload;
+  todoForUpdate?: IFormStateTodo;
+}
+
+interface IFormStateTodo {
+  title: string;
+  description: string;
+  deadline: Date;
+  completed: boolean;
 }
 
 export default function Form({ todoForUpdate }: IFormProps): JSX.Element {
@@ -22,9 +28,10 @@ export default function Form({ todoForUpdate }: IFormProps): JSX.Element {
     completed: false,
   });
   const dispatch = useAppDispatch();
-  const location = useLocation();
+  const page = useAppSelector((state) => state.todos.data.data.pagination.page);
 
   useEffect(() => {
+    // Cheack info for autofill form field
     if (todoForUpdate) {
       setInputValue(todoForUpdate);
     }
@@ -32,19 +39,26 @@ export default function Form({ todoForUpdate }: IFormProps): JSX.Element {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const limit = page * 10;
+    // IF we have do request for update todo in BD and get new layout
     if (todoForUpdate) {
       dispatch(
         updateTodo({
           newTodo: inputValue,
-          current: location.pathname === "/" ? "/home" : location.pathname,
+          offset: 0,
+          limit,
+          page,
         })
       );
       return;
     }
+    // If we haven't todo for update we create new todo and push to BD
     dispatch(
       createTodo({
         newTodo: inputValue,
-        current: location.pathname === "/" ? "/home" : location.pathname,
+        offset: 0,
+        limit,
+        page,
       })
     );
   };

@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -8,16 +8,15 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import todosReducer from './todos/todosSlice';
+import todosReducer from "./todos/todosSlice";
 
 const TodosPersistConfig = {
-  key: 'todos',
+  key: "todos",
   storage,
-  blacklist: ['pending'],
-  serialize: false,
+  blacklist: ["pending"],
 };
 
 const TodosPersistedReducer = persistReducer(TodosPersistConfig, todosReducer);
@@ -32,25 +31,25 @@ const store = configureStore({
     getDefaultMiddleware: (arg0: {
       serializableCheck: {
         ignoredActions: (
-          | 'persist/FLUSH'
-          | 'persist/REHYDRATE'
-          | 'persist/PAUSE'
-          | 'persist/PERSIST'
-          | 'persist/PURGE'
-          | 'persist/REGISTER'
+          | "persist/FLUSH"
+          | "persist/REHYDRATE"
+          | "persist/PAUSE"
+          | "persist/PERSIST"
+          | "persist/PURGE"
+          | "persist/REGISTER"
         )[];
       };
-    }) => any,
+    }) => any
   ) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  devTools: process.env.NODE_ENV === 'development',
+  devTools: process.env.NODE_ENV === "development",
 });
 
-// export const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 export default store;
 
