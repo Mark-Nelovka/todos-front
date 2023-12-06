@@ -1,5 +1,4 @@
 import TodoList from "components/TodoList/TodoList";
-import Pagination from "components/pagination/Pagination";
 import Notiflix from "notiflix";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hook";
@@ -14,23 +13,26 @@ import PlusIcon from "assets/plus-icon.svg";
 
 export default function HomePage():JSX.Element  {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const todos = useAppSelector((state) => state.todos.data.data.todos);
-  const requestError = useAppSelector(state => state.todos.error);
+  const todos = useAppSelector((state) => state.todos.data.data.todos.all);
+  const maxPage = useAppSelector(
+    (state) => state.todos.data.data.pagination.maxPage.all
+  );
+  const requestError = useAppSelector((state) => state.todos.error);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllTodos({ page: 1, currentPage: 'home' }));
+    // If storage has already have todos and do or not request
+    if (todos.length === 0) {
+      dispatch(getAllTodos({ offset: 0, limit: 10, page: 1 }));
+    }
   }, []);
 
   useEffect(() => {
-    if(requestError.statusCode) {
-            Notiflix.Notify.warning(requestError.message);
-          } 
-  }, [requestError])  
-
-  const changePage = (page: number) => {
-    dispatch(getAllTodos({ page: page, currentPage: 'home' }));
-  };
+    // Catch error for notify
+    if (requestError.statusCode) {
+      Notiflix.Notify.warning(requestError.message);
+    }
+  }, [requestError]);
 
   const toggleModal = (e: React.MouseEvent): void => {
     const { dataset } = e.target as HTMLDivElement;
@@ -39,16 +41,25 @@ export default function HomePage():JSX.Element  {
     }
   };
 
+  const getNewTodo = (newPage: number) => {
+    const limit = newPage * 10;
+    dispatch(getAllTodos({ offset: todos.length, limit, page: newPage }));
+  };
+
   return (
     <>
-    <Header />
-    <Navigation />
-    <div className="container">
-    {requestError.statusCode && todos.length === 0 && <ErrorPage />}
-    {todos.length > 0 && <TodoList todos={todos} /> }
-    {todos.length > 0 && <Pagination changePageFunc={changePage} />}
-    </div>
-    <Button
+      <Header />
+      <Navigation />
+      <div className="container">
+        {requestError.statusCode && todos.length === 0 && <ErrorPage />}
+        <TodoList
+          getNewTodo={getNewTodo}
+          maxPage={maxPage}
+          isEmptyText="You haven't any tasks yet"
+          todos={[...todos]}
+        />
+      </div>
+      <Button
         id="open-modal"
         type="button"
         dataValue="true"

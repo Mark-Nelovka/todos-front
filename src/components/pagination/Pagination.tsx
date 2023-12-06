@@ -1,65 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "redux/hook";
+import { useAppDispatch, useAppSelector } from "redux/hook";
+import { updatePage } from "redux/todos/todosOperations";
 import Button from "ui/Button/Button";
-import ArrowIcon from "assets/arrow-left-icon.svg";
 import Notiflix from "notiflix";
+import ArrowIcon from "assets/arrow-left-icon.svg";
 
 export default function Pagination({
   changePageFunc,
+  maxPage,
 }: {
   changePageFunc: (page: number) => void;
+  maxPage: number;
 }): JSX.Element {
-  const [activePage, setActivePage] = useState(1);
+  const pageFromBackend = useAppSelector(
+    (state) => state.todos.data.data.pagination.page
+  );
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(5);
   const [allPageNumber, setAllPageNumber] = useState<number[]>([]);
 
-  const countItems = useAppSelector(
-    (state) => state.todos.data.data.countTodos
-  );
+  const [activePage, setActivePage] = useState(pageFromBackend);
+  const dispatch = useAppDispatch();
 
   const changePage = (e: React.MouseEvent) => {
     const { id } = e.target as HTMLLIElement;
+    // Checking if we go to the last page and we need re-render layout for pagination
     if (+id === allPageNumber.length && allPageNumber.length > 6) {
       setFirstIndex(allPageNumber.length - 7);
       setLastIndex(allPageNumber.length - 2);
     }
     if (id) {
-      setActivePage(+id);
       changePageFunc(+id);
     }
   };
 
   useEffect(() => {
-    const arrForPageCount = [];
-    for (let i = 1; i < Math.ceil(countItems / 10) + 1; i += 1) {
-      arrForPageCount.push(i);
+    setActivePage(pageFromBackend);
+  }, [pageFromBackend]);
+
+  useEffect(() => {
+    const savePagesForPagination = [];
+    for (let i = 1; i < maxPage + 1; i += 1) {
+      savePagesForPagination.push(i);
     }
-    if (arrForPageCount.length > 0 && arrForPageCount.length < 7) {
+    if (
+      savePagesForPagination.length > 0 &&
+      savePagesForPagination.length < 7
+    ) {
       setFirstIndex(0);
       setLastIndex(6);
-      setAllPageNumber(arrForPageCount);
+      setAllPageNumber(savePagesForPagination);
+      dispatch(updatePage(1));
       return;
     }
-    setAllPageNumber(arrForPageCount);
+    setAllPageNumber(savePagesForPagination);
     setFirstIndex(0);
     setLastIndex(5);
-  }, [countItems]);
+    dispatch(updatePage(1));
+  }, [maxPage]);
 
-  const nexPage = () => {
-    if (activePage + 1 === Math.ceil(countItems / 10) + 1) {
+  const nextPage = (newPage: number) => {
+    if (newPage === maxPage + 1) {
       Notiflix.Notify.info("This is last page");
       return;
     }
-    changePageFunc(activePage + 1);
-    setActivePage((prevState) => prevState + 1);
+    changePageFunc(newPage);
     if (allPageNumber.length < 7) {
       setLastIndex(6);
       return;
     }
-
     if (
-      activePage + 1 === allPageNumber.length - 4 ||
+      newPage === allPageNumber.length - 4 ||
       activePage >= allPageNumber.length - 4
     ) {
       setFirstIndex(allPageNumber.length - 7);
@@ -72,13 +83,12 @@ export default function Pagination({
     }
   };
 
-  const prevPage = () => {
+  const prevPage = (newPage: number) => {
     if (activePage === 1) {
       Notiflix.Notify.info("This is first page");
       return;
     }
-    changePageFunc(activePage - 1);
-    setActivePage((prevState) => prevState - 1);
+    changePageFunc(newPage);
     if (allPageNumber.length < 7) {
       setLastIndex(6);
       return;
@@ -88,7 +98,7 @@ export default function Pagination({
       setLastIndex(5);
       return;
     }
-    if (activePage - 1 <= allPageNumber.length - 4) {
+    if (newPage <= allPageNumber.length - 4) {
       setFirstIndex(allPageNumber[activePage] - 5);
       setLastIndex(allPageNumber[activePage]);
       return;
@@ -103,7 +113,7 @@ export default function Pagination({
             type="button"
             styles="pagination__elements-button_prev"
             id="button-prev-page"
-            func={prevPage}
+            func={() => prevPage(activePage - 1)}
           >
             <img src={ArrowIcon} alt="button previosly page" />
           </Button>
@@ -140,7 +150,7 @@ export default function Pagination({
               id={`${allPageNumber.length}`}
               className={activePage === allPageNumber.length ? "active" : ""}
             >
-              {allPageNumber.length}
+              {maxPage}
             </li>
           )}
         </ul>
@@ -148,7 +158,7 @@ export default function Pagination({
           type="button"
           styles="pagination__elements-button_next"
           id="button-prev-page"
-          func={nexPage}
+          func={() => nextPage(activePage + 1)}
         >
           <img src={ArrowIcon} alt="button previosly page" />
         </Button>
