@@ -34,7 +34,6 @@ body {
 @media screen and (min-width: 320px) {
   .container {
       min-width: 320px;
-      height: 100%;
       padding-left: 10px;
       padding-right: 10px;
       margin: 0 auto;
@@ -44,7 +43,6 @@ body {
 @media screen and (min-width: 720px) {
   .container {
       min-width: 720px;
-      height: 100vh;
       padding-left: 15px;
       padding-right: 15px;
       margin: 0 auto;

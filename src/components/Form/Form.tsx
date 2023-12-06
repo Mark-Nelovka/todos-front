@@ -6,8 +6,8 @@ import { createTodo, updateTodo } from "redux/todos/todosOperations";
 import Title from "components/Title/Title";
 import Button from "ui/Button/Button";
 import { Input, TextArea } from "ui/FormFields/Fields";
-import CalendarIcon from "assets/calendar-icon.svg";
 import { TTodoPayload } from "redux/todos/types";
+import CalendarIcon from "assets/calendar-icon.svg";
 
 interface IFormProps {
   todoForUpdate?: IFormStateTodo;
@@ -20,7 +20,7 @@ interface IFormStateTodo {
   completed: boolean;
 }
 
-export default function Form({ todoForUpdate }: IFormProps):JSX.Element {
+export default function Form({ todoForUpdate }: IFormProps): JSX.Element {
   const [inputValue, setInputValue] = useState<TTodoPayload>({
     title: "",
     description: "",

@@ -67,8 +67,12 @@ export default function CompletedPage(): JSX.Element {
         func={toggleModal}
         styles="button-toggle-form"
       >
-        <img data-backdrop="true" src={PlusIcon} alt="Button for open create todo form" />
-      </Button> 
+        <img
+          data-backdrop="true"
+          src={PlusIcon}
+          alt="Button for open create todo form"
+        />
+      </Button>
       {isModalOpen && <Modal toggleFunc={toggleModal} />}
     </>
   );

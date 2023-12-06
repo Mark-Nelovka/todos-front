@@ -7,7 +7,10 @@ interface IModalProps {
   toggleFunc: (e: React.MouseEvent) => void;
 }
 
-export default function ModalComponent({ children, toggleFunc }: IModalProps):JSX.Element {
+export default function ModalComponent({
+  children,
+  toggleFunc,
+}: IModalProps): JSX.Element {
   return (
     <div className="modal">
       <Button

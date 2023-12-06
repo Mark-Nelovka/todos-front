@@ -10,8 +10,7 @@ import Button from "ui/Button/Button";
 import Modal from "components/Modal/Modal";
 import PlusIcon from "assets/plus-icon.svg";
 
-
-export default function HomePage():JSX.Element  {
+export default function HomePage(): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const todos = useAppSelector((state) => state.todos.data.data.todos.all);
   const maxPage = useAppSelector(
@@ -66,8 +65,12 @@ export default function HomePage():JSX.Element  {
         func={toggleModal}
         styles="button-toggle-form"
       >
-        <img data-backdrop="true" src={PlusIcon} alt="Button for open create todo form" />
-      </Button> 
+        <img
+          data-backdrop="true"
+          src={PlusIcon}
+          alt="Button for open create todo form"
+        />
+      </Button>
       {isModalOpen && <Modal toggleFunc={toggleModal} />}
     </>
   );

@@ -10,7 +10,10 @@ interface IModal {
   todoForUpdate?: TTodoPayload;
 }
 
-export default function Modal({ toggleFunc, todoForUpdate }: IModal):JSX.Element {
+export default function Modal({
+  toggleFunc,
+  todoForUpdate,
+}: IModal): JSX.Element {
   return createPortal(
     <Backdrop toggleFunc={toggleFunc}>
       <ModalComponent toggleFunc={toggleFunc}>
